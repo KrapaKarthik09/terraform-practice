@@ -22,7 +22,7 @@ resource "aws_route_table" "private_rt" {
     vpc_id = aws_vpc.kmb_vpc.id
     route{
         cidr_block = ""
-        nat_gateway_id = 
+        nat_gateway_id = aws_nat_gateway.nat_gateway.id
     }
   
 }
