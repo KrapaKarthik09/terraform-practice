@@ -8,7 +8,6 @@ terraform {
 }
 provider "aws" {
   region = var.region
-  profile = personal
 }
 data "aws_caller_identity" "current" {}
 locals {
@@ -191,39 +190,39 @@ resource "null_resource" "apply" {
 # https://docs.aws.amazon.com/eks/latest/userguide/private-clusters.html#vpc-endpoints-private-clusters
 
 #### Route Tables for S3 Gateway
-data "aws_route_table" "private-a" {
-  subnet_id = var.private_subnet_ids[0]
-}
-data "aws_route_table" "private-b" {
-  subnet_id = var.private_subnet_ids[1]
-}
-data "aws_route_table" "private-c" {
-  subnet_id = var.private_subnet_ids[2]
-}
+#data "aws_route_table" "private-a" {
+#  subnet_id = var.private_subnet_ids[0]
+#}
+#data "aws_route_table" "private-b" {
+#  subnet_id = var.private_subnet_ids[1]
+#}
+#data "aws_route_table" "private-c" {
+#  subnet_id = var.private_subnet_ids[2]
+#}
 
-resource "aws_vpc_endpoint" "vpce_s3_gw" {
-  policy = jsonencode(
-    {
-      Statement = [
-        {
-          Action    = "*"
-          Effect    = "Allow"
-          Principal = "*"
-          Resource  = "*"
-        },
-      ]
-      Version = "2008-10-17"
-    }
-  )
-  route_table_ids = [
-    "${data.aws_route_table.private-a.id}",
-    "${data.aws_route_table.private-b.id}",
-    "${data.aws_route_table.private-c.id}"
-  ]
-  service_name       = format("com.amazonaws.${var.region}.s3")
-  vpc_endpoint_type  = "Gateway"
-  vpc_id = var.vpc_id
-}
+#resource "aws_vpc_endpoint" "vpce_s3_gw" {
+#  policy = jsonencode(
+#    {
+#      Statement = [
+#        {
+#          Action    = "*"
+#          Effect    = "Allow"
+#          Principal = "*"
+#          Resource  = "*"
+#        },
+#      ]
+#      Version = "2008-10-17"
+#    }
+#  )
+#  route_table_ids = [
+#    "${data.aws_route_table.private-a.id}",
+#    "${data.aws_route_table.private-b.id}",
+#    "${data.aws_route_table.private-c.id}"
+#  ]
+#  service_name       = format("com.amazonaws.${var.region}.s3")
+#  vpc_endpoint_type  = "Gateway"
+#  vpc_id = var.vpc_id
+#}
 resource "aws_vpc_endpoint" "vpce_ec2" {
   policy = jsonencode(
     {
