@@ -2,3 +2,7 @@
 	object = de10bbfb8ef83b23adf99828801dcf2f6c7ffdeb
 	path = module
 	type = expand module
+[map "3e401ac9-28ec-39d6-a1a2-3a9441abe7aa"]
+	object = 0b4d8c6a79c7f293f4c130393c6dbf76a351c2d0
+	path = carbon
+	type = expand module
